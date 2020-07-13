@@ -12,12 +12,14 @@ import org.jetbrains.annotations.Nullable;
 public abstract class StringIdentityGenerator implements IdentityGenerator {
     public static final String PREFIX = "";
 
+    @Override
     public @NotNull String genIdentity(){
         return genIdentity(null);
     }
 
+    @Override
     public @NotNull String genIdentity(@Nullable final String prefix){
-        String id = "";
+        String id;
 
         id = doGenIdentity();
 

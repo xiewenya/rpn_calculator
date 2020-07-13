@@ -22,8 +22,11 @@ public class testSimpleLinkedListStack extends BaseTest {
         SimpleLinkedListStack stack = new SimpleLinkedListStack();
         stack.push(numberAction1);
         stack.push(numberAction2);
+        assertFalse(stack.isEmpty());
+        assertFalse(stack.isEmpty("default"));
         stack.pop();
         stack.clean();
+        assertTrue(stack.isEmpty());
         stack.push(numberAction1);
         stack.push(numberAction2);
         stack.clear();
