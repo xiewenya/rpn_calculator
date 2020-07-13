@@ -28,13 +28,13 @@ public class SimpleCommandLineCalculator extends StringIdentityCalculator {
     }
 
     public void calculate() throws ActionNotSupportException {
-        List<Action> actions = reader.process();
-
-        if(actions.size() == 0){
-            return;
-        }
-
         try{
+            List<Action> actions = reader.process();
+
+            if(actions.size() == 0){
+                return;
+            }
+
             this.eval(actions);
         }catch (WithPositionRunTimeExceptionWrapper e){
             this.printer.toPrint(e.getMsg());

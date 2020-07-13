@@ -1,6 +1,9 @@
 package com.airwallex.rpn.client;
 
 import com.airwallex.rpn.core.action.Action;
+import com.airwallex.rpn.core.action.ActionType;
+import com.airwallex.rpn.core.action.number.NumberAction;
+import com.airwallex.rpn.core.buffer.Stack;
 import com.airwallex.rpn.core.buffer.UndoCache;
 import com.airwallex.rpn.core.exception.ActionNotSupportException;
 import com.airwallex.rpn.core.exception.RpnRuntimeException;
@@ -43,8 +46,28 @@ public class UndoableStringInputProcessor implements InputProcessor<String> {
         for (int i = 0; i < commands.length; i++){
             position = nextPosition(commands, i, position);
 
+            String command = commands[i];
             //since the position calculated is started from 0, so we need to add another one;
-            actions.add(new WithPositionActionWrapper(position + 1, UndoableActionFacade.build(commands[i], undoCache)));
+            try{
+                actions.add(new WithPositionActionWrapper(position + 1, UndoableActionFacade.build(command, undoCache)));
+            } catch (ActionNotSupportException e){
+                throw new WithPositionRunTimeExceptionWrapper(e, new WithPositionActionWrapper(position + 1, new Action() {
+                    @Override
+                    public <T> void run(T identity, Stack<T, NumberAction> stack) {
+                    }
+
+                    @Override
+                    public ActionType ofType() {
+                        return null;
+                    }
+
+                    @Override
+                    public String ofAction() {
+                        return command;
+                    }
+                }));
+            }
+
         }
 
         return actions;

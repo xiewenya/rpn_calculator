@@ -181,10 +181,14 @@ public class testSimpleCommandLineCalculator extends BaseTest {
         }
     }
 
-    @Test(expected = ActionNotSupportException.class)
+    @Test
     public void test_calculation_with_invalid_input() throws ActionNotSupportException {
         when(inputChannel.readLine()).thenReturn("ww");
-        calculator.calculate();
+        try{
+            calculator.calculate();
+        } catch (WithPositionRunTimeExceptionWrapper e){
+            assertEquals(e.getMsg(), "operator ww (position: 1):number format incorrect");
+        }
     }
 
     @Test
