@@ -39,6 +39,12 @@ public abstract class AbstractStack<T, K> implements Stack<T, K> {
             return null;
         }
 
+        Deque<K> deque = dequeMap.get(identity);
+
+        if (deque.size() == 0){
+            return null;
+        }
+
         return dequeMap.get(identity).pop();
     }
 

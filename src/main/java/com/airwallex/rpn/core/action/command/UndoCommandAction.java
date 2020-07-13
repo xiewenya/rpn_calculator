@@ -22,6 +22,7 @@ public class UndoCommandAction extends CommandAction {
     @Override
     @SuppressWarnings("unchecked")
     public <T> void run(T identity, Stack<T, NumberAction> stack) {
+
         UndoCache.CacheLog<NumberAction> cacheLog = undoCache.pop(identity);
 
         if (cacheLog == null){
