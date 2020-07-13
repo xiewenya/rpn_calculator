@@ -13,13 +13,13 @@ import org.jetbrains.annotations.NotNull;
  * @content:
  */
 public class App {
+    public static volatile boolean running = true;
 
     public static void main(String[] args) {
         run();
     }
 
     public static void run() {
-        boolean running = true;
         //shared stack for all calculator
         SimpleLinkedListStack stack = new SimpleLinkedListStack();
 
